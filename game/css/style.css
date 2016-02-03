@@ -1,0 +1,77 @@
+@font-face {
+    font-family: "Swarm";
+    src: url("../assets/Swarm.woff") format('woff');
+}
+
+body {
+	background-color: black;
+}
+
+#board {
+	z-index: -1;
+	position: absolute;
+	top: 0;
+	width: 90%;
+	height: 98%;
+	border: 5px solid #311198;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+#player-1 {
+	display: inline-block;
+	background-color: #B10064;
+	width: 50%;
+	height: 100%;
+}
+
+#player-2 {
+	display: inline-block;
+	background-color: #DDDD00;
+	width: 50%;
+	height: 100%;
+}
+
+.info-text {
+	font-family: Swarm;
+	font-size: 96px;
+	text-align: center;
+	margin-top: 10%;
+}
+
+.info-text.p1 {
+	color: #DDDD00;
+}
+
+.info-text.p2 {
+	color: #B10064;
+}
+
+.controls {
+	text-align: center;
+}
+
+.control {
+	padding: 2px;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+.control-up {
+	display: block;
+}
+
+.control-pressed {
+	padding: 0px;
+	border: 2px solid #311198;
+}
+
+#timer {
+	z-index: 1;
+	max-width: 52px;
+	margin: 0 auto;
+	font-family: Swarm;
+	font-size: 48px;
+	color: white;
+	background-color: #311198;
+}
