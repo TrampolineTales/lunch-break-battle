@@ -53,11 +53,17 @@ body {
 
 .control {
 	padding: 2px;
+	margin: 0 auto;
+	display: inline-block;
 }
 
 .control-up {
 	display: block;
-	margin: 0 auto;
+}
+
+.control-pressed {
+	padding: 0px;
+	border: 2px solid #311198;
 }
 
 #timer {
