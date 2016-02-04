@@ -33,11 +33,37 @@ body {
 	height: 100%;
 }
 
+.art {
+	font-family: Swarm;
+	font-size: 192px;
+	text-align: center;
+}
+
+.art.p1 {
+	color: #DDDD00;
+}
+
+.art.p2 {
+	color: #B10064;
+}
+
 .info-text {
 	font-family: Swarm;
 	font-size: 96px;
 	text-align: center;
 	margin-top: 140px;
+}
+
+.mg-timer {
+	position: absolute;
+	bottom: 0px;
+	height: 20px;
+	background-color: #DDDD00;
+}
+
+.mg-timer.p2 {
+	right: 0px;
+	background-color: #B10064;
 }
 
 .info-text.p1 {
