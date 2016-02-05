@@ -291,7 +291,7 @@ $(function(){
             }
         },
         countdown: function() {
-            titleScreenBool = false;
+            game.titleScreenBool = false;
             window.setTimeout(game.start, 3000);
         },
         start: function() {
