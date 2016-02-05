@@ -19,6 +19,7 @@ body {
 }
 
 #player-1 {
+	float: left;
 	display: inline-block;
 	background-color: #B10064;
 	width: 50%;
@@ -32,11 +33,38 @@ body {
 	height: 100%;
 }
 
+.art {
+	font-family: Swarm;
+	font-size: 192px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+.art.p1 {
+	color: #DDDD00;
+}
+
+.art.p2 {
+	color: #B10064;
+}
+
 .info-text {
 	font-family: Swarm;
 	font-size: 96px;
 	text-align: center;
-	margin-top: 10%;
+	margin-top: 148px;
+}
+
+.mg-timer {
+	position: absolute;
+	bottom: 0px;
+	height: 18px;
+	background-color: #DDDD00;
+}
+
+.mg-timer.p2 {
+	right: 0px;
+	background-color: #B10064;
 }
 
 .info-text.p1 {
@@ -52,7 +80,7 @@ body {
 }
 
 .control {
-	padding: 2px;
+	padding: 4px;
 	margin: 0 auto;
 	display: inline-block;
 }
@@ -63,15 +91,50 @@ body {
 
 .control-pressed {
 	padding: 0px;
-	border: 2px solid #311198;
+	border: 4px solid white;
+}
+
+.score {
+	z-index: 1;
+	float: left;
+	text-align: center;
+	margin: 0px;
+	max-height: 82px;
+	font-family: Swarm;
+	font-size: 96px;
+	max-width: 300px;
+	color: white;
+	background-color: #311198;
+}
+
+.selector-p1 {
+	font-family: Swarm;
+	position: absolute;
+	margin-top: 68px;
+	color: #DDDD00;
+	font-size: 96px;
+}
+
+.selector-p2 {
+	font-family: Swarm;
+	position: absolute;
+	margin-top: 68px;
+	color: #B10064;
+	font-size: 96px;
+}
+
+.score.p2 {
+	float: right;
+	padding-left: 3px;
 }
 
 #timer {
 	z-index: 1;
-	max-width: 52px;
+	max-width: 102px;
+	padding: 0px 4px;
 	margin: 0 auto;
 	font-family: Swarm;
-	font-size: 48px;
+	font-size: 96px;
 	color: white;
 	background-color: #311198;
 }
