@@ -36,6 +36,7 @@ body {
 .art {
 	font-family: Swarm;
 	font-size: 192px;
+	margin-top: 50px;
 	text-align: center;
 }
 
@@ -51,13 +52,13 @@ body {
 	font-family: Swarm;
 	font-size: 96px;
 	text-align: center;
-	margin-top: 140px;
+	margin-top: 148px;
 }
 
 .mg-timer {
 	position: absolute;
 	bottom: 0px;
-	height: 20px;
+	height: 18px;
 	background-color: #DDDD00;
 }
 
@@ -98,12 +99,28 @@ body {
 	float: left;
 	text-align: center;
 	margin: 0px;
-	max-height: 87px;
+	max-height: 82px;
 	font-family: Swarm;
 	font-size: 96px;
-	max-width: 58px;
+	max-width: 300px;
 	color: white;
 	background-color: #311198;
+}
+
+.selector-p1 {
+	font-family: Swarm;
+	position: absolute;
+	margin-top: 68px;
+	color: #DDDD00;
+	font-size: 96px;
+}
+
+.selector-p2 {
+	font-family: Swarm;
+	position: absolute;
+	margin-top: 68px;
+	color: #B10064;
+	font-size: 96px;
 }
 
 .score.p2 {
