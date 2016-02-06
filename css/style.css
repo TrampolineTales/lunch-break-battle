@@ -5,17 +5,15 @@
 
 body {
 	background-color: black;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 #board {
-	z-index: -1;
-	position: absolute;
-	top: 0;
-	width: 90%;
-	height: 98%;
+	margin: 0 auto;
+	width: 1216px;
+	height: 604px;
 	border: 5px solid #311198;
-	margin-left: 5%;
-	margin-right: 5%;
 }
 
 #player-1 {
@@ -34,9 +32,10 @@ body {
 }
 
 .art {
+	position: relative;
 	font-family: Swarm;
 	font-size: 192px;
-	margin-top: 50px;
+	height: 192px;
 	text-align: center;
 }
 
@@ -52,22 +51,24 @@ body {
 	font-family: Swarm;
 	font-size: 96px;
 	text-align: center;
-	margin-top: 148px;
+	margin-top: 18px;
 }
 
 .mg-timer {
-	position: absolute;
-	bottom: 0px;
+	position: relative;
+	bottom: -18px;
 	height: 18px;
+	width: 608px;
 	background-color: #DDDD00;
 }
 
 .mg-timer.p2 {
-	right: 0px;
+	float: right;
 	background-color: #B10064;
 }
 
-.info-text.p1 {
+.info-text.p1 {;
+	margin-top: -69px;
 	color: #DDDD00;
 }
 
@@ -95,7 +96,6 @@ body {
 }
 
 .score {
-	z-index: 1;
 	float: left;
 	text-align: center;
 	margin: 0px;
@@ -109,7 +109,7 @@ body {
 
 .selector-p1 {
 	font-family: Swarm;
-	position: absolute;
+	position: relative;
 	margin-top: 68px;
 	color: #DDDD00;
 	font-size: 96px;
@@ -117,7 +117,7 @@ body {
 
 .selector-p2 {
 	font-family: Swarm;
-	position: absolute;
+	position: relative;
 	margin-top: 68px;
 	color: #B10064;
 	font-size: 96px;
@@ -129,12 +129,13 @@ body {
 }
 
 #timer {
-	z-index: 1;
+	position: relative;
 	max-width: 102px;
 	padding: 0px 4px;
 	margin: 0 auto;
 	font-family: Swarm;
 	font-size: 96px;
+	left: 302px;
 	color: white;
 	background-color: #311198;
 }
