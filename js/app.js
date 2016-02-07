@@ -91,6 +91,8 @@ $(function(){
         this.speed = speed;
         this.p1Amount = 0;
         this.p2Amount = 0;
+        this.p1Alternator = true;
+        this.p2Alternator = true;
         this.controls = [];
         this.winCondition = null;
         this.winValue = -1;
@@ -98,7 +100,7 @@ $(function(){
         this.clue = '';
         this.musicNum = 0;
 
-        this.miniGameNum = Math.floor(Math.random() * 4);
+        this.miniGameNum = Math.floor(Math.random() * 5);
         
         switch (this.miniGameNum) {
             case 0:
@@ -130,6 +132,26 @@ $(function(){
                 this.fullKeyPresses = false;
                 this.controls = [0, 1, 2, 3, 4, 5, 6, 7];
                 this.musicNum = 17 + Math.floor(this.speed * 2.75) - 2;
+            break;
+            case 4:
+                this.musicNum = 17 + Math.floor(this.speed * 2.75) - 2;
+                var num1 = Math.floor(Math.random() * 90);
+                var num2 = Math.floor(Math.random() * 10);
+                $p1Art.css('font-size', '48px');
+                $p2Art.css('font-size', '48px');
+                this.winValue = 1;
+                var sumDiff = 0;
+                if (Math.random() < 0.5) {
+                    sumDiff += Math.floor(Math.random() * 10) + 1;
+                }
+                else {
+                    this.p1Amount = 1;
+                    this.p2Amount = 1;
+                }
+                this.fullKeyPresses = true;
+                this.winCondition = 'greater';
+                this.clue = num1.toString() + ' + ' + num2.toString() + ' = ' + (num1 + num2 + sumDiff).toString() + '?';
+                this.controls = [0, 2, 4, 6];
             break;
         }
 
@@ -184,6 +206,20 @@ $(function(){
                     }
                 break;
                 case 4:
+                    if (this.p1Alternator) {
+                        $p1Art.html('<br>I think it\'s correct!');
+                    }
+                    else {
+                        $p1Art.html('<br>I think it\'s incorrect!');
+                    }
+                    if (this.p2Alternator) {
+                        $p2Art.html('<br>I think it\'s correct!');
+                    }
+                    else {
+                        $p2Art.html('<br>I think it\'s incorrect!');
+                    }
+                break;
+                case 5:
                     if ($p1Art.children().length == 0) {
                         $p1Art.css('width', '142px');
                         $p1Art.css('height', '18px');
@@ -242,6 +278,31 @@ $(function(){
                             this.p2Amount = -1;
                         }
                     };
+                break;
+                case 4:
+                    if (keyPressBools[0]) {
+                        this.p1Amount++;
+                        this.p1Alternator = !this.p1Alternator;
+                    }
+                    if (keyPressBools[2]) {
+                        this.p1Amount++;
+                        this.p1Alternator = !this.p1Alternator;
+                    }
+                    if (keyPressBools[4]) {
+                        this.p2Amount++;
+                        this.p2Alternator = !this.p2Alternator;
+                    }
+                    if (keyPressBools[6]) {
+                        this.p2Amount++;
+                        this.p2Alternator = !this.p2Alternator;
+                    }
+
+                    if (this.p1Amount > 1) {
+                        this.p1Amount = 0;
+                    }
+                    if (this.p2Amount > 1) {
+                        this.p2Amount = 0;
+                    }
                 break;
             }
         }
@@ -629,8 +690,10 @@ $(function(){
                     game.playMusic(assetHandler.$music[7][0]);
                 }
                 if (Math.ceil(game.currentMiniGame.framesLeft) == 165) {
-                    game.currentMiniGame.p1Amount = 0;
-                    game.currentMiniGame.p2Amount = 0;
+                    if (game.currentMiniGame.miniGameNum != 4) {
+                        game.currentMiniGame.p1Amount = 0;
+                        game.currentMiniGame.p2Amount = 0;
+                    }
                     game.displayControls(game.currentMiniGame.controls);
                     $p1InfoText.text(game.currentMiniGame.clue);
                     $p2InfoText.text(game.currentMiniGame.clue);
@@ -685,8 +748,8 @@ $(function(){
                         assetHandler.$music[0][0].currentTime = 0;
                         assetHandler.$music[1][0].currentTime = 0;
                     }
-                    $p1Art.text(game.p1Score);
-                    $p2Art.text(game.p2Score);
+                    $p1Art.text(game.p1Score).css('font-size', '192px');
+                    $p2Art.text(game.p2Score).css('font-size', '192px');
                     if (game.p1Score > game.p2Score) {
                         $p1InfoText.text('WINNER');
                         $p2InfoText.text('LOSER');
@@ -836,8 +899,8 @@ $(function(){
             game.displayControls([]);
             $p1Timer.css('width', '0%');
             $p2Timer.css('width', '0%');
-            $p1Art.css('bottom', '0px');
-            $p2Art.css('bottom', '0px');
+            $p1Art.css('bottom', '0px').css('font-size', '192px');
+            $p2Art.css('bottom', '0px').css('font-size', '192px');
             $p1Score.text(game.p1Score.toString());
             $p2Score.text(game.p2Score.toString());
             this.currentMiniGame = new MiniGame(232, game.speed);
