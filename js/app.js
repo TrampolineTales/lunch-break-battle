@@ -100,7 +100,7 @@ $(function(){
         this.clue = '';
         this.musicNum = 0;
 
-        this.miniGameNum = Math.floor(Math.random() * 5);
+        this.miniGameNum = Math.floor(Math.random() * 6);
 
         switch (this.miniGameNum) {
             case 0:
@@ -112,7 +112,7 @@ $(function(){
             break;
             case 1:
                 this.winCondition = 'first';
-                this.winValue = 13;
+                this.winValue = 15;
                 this.clue = 'LIFT!';
                 this.fullKeyPresses = true;
                 this.controls = [0, 4];
@@ -149,6 +149,36 @@ $(function(){
                 this.fullKeyPresses = true;
                 this.winCondition = 'greater';
                 this.clue = num1.toString() + ' + ' + num2.toString() + ' = ' + (num1 + num2 + sumDiff).toString() + '?';
+                this.controls = [0, 2, 4, 6];
+            break;
+            case 5:
+                this.musicNum = 17 + Math.floor(this.speed * 2.75) - 2;
+                var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                var letterPos = Math.floor(Math.random() * 26);
+                this.winValue = 1;
+                var letterDiff = 0;
+                var suffix = 'th';
+                if (Math.random() < 0.5) {
+                    letterDiff += Math.floor(Math.random() * 3) + 1;
+                }
+                else {
+                    this.p1Amount = 1;
+                    this.p2Amount = 1;
+                }
+                this.fullKeyPresses = true;
+                this.winCondition = 'greater';
+
+                if ((letterPos + letterDiff == 0) || (letterPos + letterDiff == 20)) {
+                    suffix = 'st';
+                }
+                else if ((letterPos + letterDiff == 1) || (letterPos + letterDiff == 21)) {
+                    suffix = 'nd';
+                }
+                else if ((letterPos + letterDiff == 2) || (letterPos + letterDiff == 22)) {
+                    suffix = 'rd';
+                }
+
+                this.clue = letters[letterPos] + ' is the ' + (letterPos + 1 + letterDiff).toString() + suffix + ' letter of the alphabet';
                 this.controls = [0, 2, 4, 6];
             break;
         }
@@ -222,6 +252,24 @@ $(function(){
                     }
                 break;
                 case 5:
+                    $p1InfoText.css('font-size', '48px');
+                    $p2InfoText.css('font-size', '48px');
+                    $p1Art.css('font-size', '96px');
+                    $p2Art.css('font-size', '96px');
+                    if (this.p1Alternator) {
+                        $p1Art.html('<br>Yup!');
+                    }
+                    else {
+                        $p1Art.html('<br>Nope!');
+                    }
+                    if (this.p2Alternator) {
+                        $p2Art.html('<br>Yup!');
+                    }
+                    else {
+                        $p2Art.html('<br>Nope!');
+                    }
+                break;
+                case 6:
                     if ($p1Art.children().length == 0) {
                         $p1Art.css('width', '142px');
                         $p1Art.css('height', '18px');
@@ -282,6 +330,31 @@ $(function(){
                     };
                 break;
                 case 4:
+                    if (keyPressBools[0]) {
+                        this.p1Amount++;
+                        this.p1Alternator = !this.p1Alternator;
+                    }
+                    if (keyPressBools[2]) {
+                        this.p1Amount++;
+                        this.p1Alternator = !this.p1Alternator;
+                    }
+                    if (keyPressBools[4]) {
+                        this.p2Amount++;
+                        this.p2Alternator = !this.p2Alternator;
+                    }
+                    if (keyPressBools[6]) {
+                        this.p2Amount++;
+                        this.p2Alternator = !this.p2Alternator;
+                    }
+
+                    if (this.p1Amount > 1) {
+                        this.p1Amount = 0;
+                    }
+                    if (this.p2Amount > 1) {
+                        this.p2Amount = 0;
+                    }
+                break;
+                case 5:
                     if (keyPressBools[0]) {
                         this.p1Amount++;
                         this.p1Alternator = !this.p1Alternator;
@@ -899,6 +972,8 @@ $(function(){
         },
         endMiniGame: function() {
             game.displayControls([]);
+            $p1InfoText.css('font-size', '96px');
+            $p2InfoText.css('font-size', '96px');
             $p1Timer.css('width', '0%');
             $p2Timer.css('width', '0%');
             $p1Art.css('bottom', '0px');

@@ -58,6 +58,7 @@ body {
 .info-text {
 	font-family: Swarm;
 	font-size: 96px;
+	height: 87px;
 	text-align: center;
 	margin-top: 18px;
 }
