@@ -902,8 +902,8 @@ $(function(){
             $p1Art.css('bottom', '0px');
             $p2Art.css('bottom', '0px');
             if (game.currentMiniGame.miniGameNum == 4) {
-                $p1Art.css('font-size', '192px').empty();
-                $p2Art.css('font-size', '192px').empty();
+                $p1Art.css('font-size', '192px').text('');
+                $p2Art.css('font-size', '192px').text('');
             }
             $p1Score.text(game.p1Score.toString());
             $p2Score.text(game.p2Score.toString());
