@@ -101,7 +101,7 @@ $(function(){
         this.musicNum = 0;
 
         this.miniGameNum = Math.floor(Math.random() * 5);
-        
+
         switch (this.miniGameNum) {
             case 0:
                 this.winCondition = 'greater';
@@ -137,8 +137,6 @@ $(function(){
                 this.musicNum = 17 + Math.floor(this.speed * 2.75) - 2;
                 var num1 = Math.floor(Math.random() * 90);
                 var num2 = Math.floor(Math.random() * 10);
-                $p1Art.css('font-size', '48px');
-                $p2Art.css('font-size', '48px');
                 this.winValue = 1;
                 var sumDiff = 0;
                 if (Math.random() < 0.5) {
@@ -158,6 +156,8 @@ $(function(){
         this.draw = function() {
             switch (this.miniGameNum) {
                 case 0:
+                    $p1Art.css('font-size', '192px');
+                    $p2Art.css('font-size', '192px');
                     $p1Art.text(this.p1Amount.toString());
                     $p2Art.text(this.p2Amount.toString());
                 break;
@@ -206,6 +206,8 @@ $(function(){
                     }
                 break;
                 case 4:
+                    $p1Art.css('font-size', '48px');
+                    $p2Art.css('font-size', '48px');
                     if (this.p1Alternator) {
                         $p1Art.html('<br>I think it\'s correct!');
                     }
@@ -901,10 +903,6 @@ $(function(){
             $p2Timer.css('width', '0%');
             $p1Art.css('bottom', '0px');
             $p2Art.css('bottom', '0px');
-            if (game.currentMiniGame.miniGameNum == 4) {
-                $p1Art.css('font-size', '192px').text('');
-                $p2Art.css('font-size', '192px').text('');
-            }
             $p1Score.text(game.p1Score.toString());
             $p2Score.text(game.p2Score.toString());
             this.currentMiniGame = new MiniGame(232, game.speed);
