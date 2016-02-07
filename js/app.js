@@ -23,6 +23,8 @@ $(function(){
     	$controlAssets: [],
         $selectorAssets: [],
         $weightLifterAssets: [],
+        $quickDrawAssets: [],
+        $towerAssets: [],
         $music: [],
         $sfx: [],
     	loadAssets: function() {
@@ -68,6 +70,8 @@ $(function(){
     		this.$controlAssets.push($('<img>').attr('src', 'assets/art/right.png').attr('class', 'control').appendTo($p2Controls));
             for (var i = 0; i < 4; i++) {
                 this.$weightLifterAssets.push($('<img>').attr('src', 'assets/art/weightlifter' + i.toString() + '.png'));
+                this.$quickDrawAssets.push($('<img>').attr('src', 'assets/art/quickdraw' + i.toString() + '.png'));
+                this.$towerAssets.push($('<img>').attr('src', 'assets/art/tower' + i.toString() + '.png'));
             };
 
             for (var i = 0; i < 95; i++) {
@@ -94,7 +98,7 @@ $(function(){
         this.clue = '';
         this.musicNum = 0;
 
-        this.miniGameNum = Math.floor(Math.random() * 2);
+        this.miniGameNum = Math.floor(Math.random() * 4);
         
         switch (this.miniGameNum) {
             case 0:
@@ -113,10 +117,19 @@ $(function(){
                 this.musicNum = 23 + Math.floor(this.speed * 2.75) - 2;
             break;
             case 2:
-                this.winCondition = 'greater';
-                this.clue = 'CATCH HIM!';
+                this.winCondition = 'first';
+                this.winValue = 1;
+                this.clue = 'FIRE!';
                 this.fullKeyPresses = false;
-                this.controls = [1, 3, 5, 7];
+                this.controls = [3, 5];
+                this.musicNum = 11 + Math.floor(this.speed * 2.75) - 2;
+            break;
+            case 3:
+                this.winCondition = 'greater';
+                this.clue = 'DON\'T PRESS!';
+                this.fullKeyPresses = false;
+                this.controls = [0, 1, 2, 3, 4, 5, 6, 7];
+                this.musicNum = 17 + Math.floor(this.speed * 2.75) - 2;
             break;
         }
 
@@ -143,6 +156,34 @@ $(function(){
                     }
                 break;
                 case 2:
+                    if ($p1Art.children().length == 0) {
+                        assetHandler.$quickDrawAssets[0].appendTo($p1Art);
+                        assetHandler.$quickDrawAssets[2].appendTo($p2Art);
+                    }
+                    if (this.p1Amount == this.winValue) {
+                        $p2Art.empty();
+                        assetHandler.$quickDrawAssets[3].appendTo($p2Art);
+                    }
+                    if (this.p2Amount == this.winValue) {
+                        $p1Art.empty();
+                        assetHandler.$quickDrawAssets[1].appendTo($p1Art);
+                    }
+                break;
+                case 3:
+                    if ($p1Art.children().length == 0) {
+                        assetHandler.$towerAssets[2].appendTo($p1Art);
+                        assetHandler.$towerAssets[0].appendTo($p2Art);
+                    }
+                    if (this.p1Amount < 0) {
+                        $p1Art.empty();
+                        assetHandler.$towerAssets[3].appendTo($p1Art);
+                    }
+                    if (this.p2Amount < 0) {
+                        $p2Art.empty();
+                        assetHandler.$towerAssets[1].appendTo($p2Art);
+                    }
+                break;
+                case 4:
                     if ($p1Art.children().length == 0) {
                         $p1Art.css('width', '142px');
                         $p1Art.css('height', '18px');
@@ -184,10 +225,29 @@ $(function(){
                         }
                     }
                 break;
+                case 2:
+                    if (keyPressBools[3]) {
+                        this.p1Amount++;
+                    }
+                    if (keyPressBools[5]) {
+                        this.p2Amount++;
+                    }
+                break;
+                case 3:
+                    for (var i = 0; i < keyPressBools.length; i++) {
+                        if ((i < 4) && (keyPressBools[i])) {
+                            this.p1Amount = -1;
+                        }
+                        if ((i >= 4) && (keyPressBools[i])) {
+                            this.p2Amount = -1;
+                        }
+                    };
+                break;
             }
         }
         this.checkWin = function() {
             if (((this.winCondition == 'greater') && (this.p1Amount > this.p2Amount) && (this.framesLeft <= 45)) || ((this.winCondition == 'first') && (this.p1Amount >= this.winValue))) {
+                console.log(this.p1Amount);
                 return 1;
             }
             if (((this.winCondition == 'greater') && (this.p1Amount < this.p2Amount) && (this.framesLeft <= 45)) || ((this.winCondition == 'first') && (this.p2Amount >= this.winValue))) {
@@ -251,12 +311,18 @@ $(function(){
         titleScreenBool: true,
         changeMute: function() {
             game.muted = !game.muted;
-            if ((!game.muted) && (game.titleScreenBool)) {
-                game.playMusic(assetHandler.$music[10][0]);
+            if (!game.muted) {
+                if (game.titleScreenBool) {
+                    game.playMusic(assetHandler.$music[10][0]);
+                }
+                $muteButton.children().attr('src', 'assets/art/mute.png');
             }
-            else if (game.titleScreenBool) {
+            else {
+                if (game.titleScreenBool) {
                 assetHandler.$music[10][0].pause();
                 assetHandler.$music[10][0].currentTime = 0;
+                }
+                $muteButton.children().attr('src', 'assets/art/muted.png');
             }
         },
         playMusic: function(music) {
@@ -563,6 +629,8 @@ $(function(){
                     game.playMusic(assetHandler.$music[7][0]);
                 }
                 if (Math.ceil(game.currentMiniGame.framesLeft) == 165) {
+                    game.currentMiniGame.p1Amount = 0;
+                    game.currentMiniGame.p2Amount = 0;
                     game.displayControls(game.currentMiniGame.controls);
                     $p1InfoText.text(game.currentMiniGame.clue);
                     $p2InfoText.text(game.currentMiniGame.clue);
@@ -590,7 +658,7 @@ $(function(){
                             game.p2Score++;
                             assetHandler.$music[game.currentMiniGame.musicNum][0].pause();
                             assetHandler.$music[game.currentMiniGame.musicNum][0].currentTime = 0;
-                            game.playMusic(assetHandler.$music[1 + Math.floor(game.currentMiniGame.speed * 2.75) - 2][0]);
+                            game.playMusic(assetHandler.$music[3 + Math.floor(game.currentMiniGame.speed * 2.75) - 2][0]);
                             game.endMiniGame();
                         break;
                         case 3:
